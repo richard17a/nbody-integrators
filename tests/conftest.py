@@ -22,14 +22,3 @@ def particle_1_copy():
     )
 
     return particle_1_copy
-
-
-@pytest.fixture(scope="session")
-def particle_3():
-    from src.particle import Particle
-
-    particle_3 = Particle(
-        mass=1.0, position=np.array([1, 2]), velocity=np.array([1, 2, 3])
-    )
-
-    return particle_3
