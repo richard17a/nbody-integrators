@@ -3,7 +3,7 @@ Add module docstring...
 """
 
 import numpy as np 
-from particle import Particle 
+from src.particle import Particle 
 
 
 class Particles(object):
@@ -13,20 +13,36 @@ class Particles(object):
 	def __init__(
 		self
 	):
-		self.particles = []
-		self.N = 0
+		self.__particles = []
+		self.__N = 0
 
 	@property
 	def N(self):
-		return self._N
+		return self.__N
 
 	@property
 	def particles(self):
-		return self._particles
+		return self
 	
 	def add_particle(self, particle: Particle):
-		pass
+		
+		if isinstance(particle, Particle) and (particle not in self.__particles):
+
+			self.__particles.append(particle)
+			self.__N += 1
+
+		else:
+
+			raise TypeError("Unable to add particle.")
+
 
 	def remove_particle(self, particle: Particle):
-		pass
-	
+		
+		if isinstance(particle, Particle) and (particle in self.__particles):
+
+			self.__particles.remove(particle)
+			self.__N -= 1
+
+		else:
+
+			raise TypeError("Unable to remove particle.")
