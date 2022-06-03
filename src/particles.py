@@ -2,46 +2,45 @@
 Add module docstring...
 """
 
-import numpy as np
 from src.particle import Particle
 
 
 class Particles(object):
-	"""
-	Class docstring
-	"""
-	def __init__(
-		self
-	):
-		self.__particles = []
-		self.__N = 0
+    """
+    Class docstring
+    """
 
-	@property
-	def N(self):
-		return self.__N
+    def __init__(self):
+        self.__particles = []
+        self.__N = 0
 
-	@property
-	def particles(self):
-		return self
+    @property
+    def N(self):
+        return self.__N
 
-	def add_particle(self, particle: Particle):
+    @property
+    def particles(self):
+        return self
 
-		if isinstance(particle, Particle) and (particle not in self.__particles):
+    def add_particle(self, particle: Particle):
 
-			self.__particles.append(particle)
-			self.__N += 1
+        if isinstance(particle, Particle):
+            if particle not in self.__particles:
 
-		else:
+                self.__particles.append(particle)
+                self.__N += 1
 
-			raise TypeError("Unable to add particle.")
+        else:
 
-	def remove_particle(self, particle: Particle):
+            raise TypeError("Unable to add particle.")
 
-		if isinstance(particle, Particle) and (particle in self.__particles):
+    def remove_particle(self, particle: Particle):
 
-			self.__particles.remove(particle)
-			self.__N -= 1
+        if isinstance(particle, Particle) and (particle in self.__particles):
 
-		else:
+            self.__particles.remove(particle)
+            self.__N -= 1
 
-			raise TypeError("Unable to remove particle.")
+        else:
+
+            raise TypeError("Unable to remove particle.")
