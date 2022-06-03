@@ -2,20 +2,20 @@
 Add module docstring here...
 """
 
-import numpy as np 
-import matplotlib.pyplot as plt 
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Forward_Euler(object):
 
 	def __init__(
-		self, 
+		self,
 		particles
 	):
 		self.particles = particles
 
 	def integrate(
-		self, 
+		self,
 		end_time
 	):
-		# Implement forward euler integrator here
+		pass
