@@ -8,8 +8,8 @@ import numpy as np
 class Particle(object):
     def __init__(self, mass, position, velocity):
         self.mass = mass
-        self.position = position
-        self.velocity = velocity
+        self.__position = position
+        self.__velocity = velocity
 
         # split up position
         self.x_pos = position[0]
@@ -29,7 +29,7 @@ class Particle(object):
 
     @property
     def position(self):
-        return self.position
+        return self.__position
 
     @position.setter
     def position(self, position):
@@ -40,7 +40,7 @@ class Particle(object):
                 self.x_pos = position[0]
                 self.y_pos = position[1]
                 self.z_pos = position[2]
-                self.position = position
+                self.__position = position
 
             else:
                 raise TypeError(
@@ -56,7 +56,7 @@ be a numpy array of length 3."
 
     @property
     def velocity(self):
-        return self.velocity
+        return self.__velocity
 
     @velocity.setter
     def velocity(self, velocity):
@@ -67,7 +67,7 @@ be a numpy array of length 3."
                 self.x_vel = velocity[0]
                 self.y_vel = velocity[1]
                 self.z_vel = velocity[2]
-                self.velocity = velocity
+                self.__velocity = velocity
 
             else:
                 raise TypeError(
