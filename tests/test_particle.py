@@ -15,4 +15,4 @@ def test_particle():
         velocity=np.array([1, 2, 3]),
     )
 
-    assert particle_1 and particle_1_copy
+    assert not particle_1 and particle_1_copy
