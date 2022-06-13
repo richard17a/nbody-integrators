@@ -16,3 +16,11 @@ def test_particle():
     )
 
     assert particle_1 and particle_1_copy
+    assert hash(particle_1) == hash(particle_1_copy)
+    assert list(particle_1.position) == [1, 2, 3]
+    assert (
+        particle_1_copy.x_pos == 1
+        and particle_1_copy.y_pos == 2
+        and particle_1_copy.z_pos == 3
+    )
+    assert list(particle_1.velocity) == [1, 2, 3]
