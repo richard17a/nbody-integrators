@@ -2,7 +2,7 @@
 Add module docstring...
 """
 
-from src.particle import Particle
+from nbody.particle import Particle
 
 
 class Particles(object):
