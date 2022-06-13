@@ -18,7 +18,7 @@ def test_particles():
         velocity=np.array([-1, -2, -3]),
     )
 
-    assert not particle_1 and particle_2
+    assert particle_1 and particle_2
 
     particles_container = Particles()
     assert particles_container
