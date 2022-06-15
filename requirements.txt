@@ -1,3 +1,4 @@
 pytest
 pytest-cov
 numpy==1.21.5
+matplotlib==3.5.0
