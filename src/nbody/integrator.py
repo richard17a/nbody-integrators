@@ -27,6 +27,10 @@ class Integrator(object):
     def t(self):
         return self._t
 
+    @property
+    def initialised(self):
+        return self.__initialised
+
     def calculate_energy(self, sol_state):
         energy = sol_state[:, 0] * 0
 
@@ -76,9 +80,12 @@ class Integrator(object):
         ax.set_ylabel("y")
         ax.set_xlim(-5, 5)
         ax.set_ylim(-5, 5)
+        plt.title(title)
         plt.show()
 
     def initialise(self, to_time=None):
+        self.__initialised = True
+
         if to_time is not None:
             self.t_end = to_time
 

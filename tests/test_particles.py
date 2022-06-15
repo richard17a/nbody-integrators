@@ -25,9 +25,14 @@ def test_particles():
 
     particles_container.add_particle(particle_1)
     assert particles_container.N == 1
+    assert list(particles_container.positions) == [1, 2, 3]
+    assert list(particles_container.masses) == [1.0]
+    assert particles_container.particles == particles_container
 
     particles_container.add_particle(particle_2)
     assert particles_container.N == 2
+    assert list(particles_container.positions) == [1, 2, 3, -1, -2, -3]
+    assert list(particles_container.masses) == [1.0, 2.0]
 
     particles_container.add_particle(particle_1)
     assert particles_container.N == 2

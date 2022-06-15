@@ -16,7 +16,6 @@ class Forward_Euler(Integrator):
 
         if not self.__initialised:
             x, sol_time, npts = self.initialise(end_time)
-            self.__initialized = True
 
         sol_state = np.zeros((npts, len(x)))
         sol_state[0, :] = x
