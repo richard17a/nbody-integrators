@@ -41,8 +41,6 @@ jobs:
     - name: Test with tox
       run:
         tox
-    - name: Run tests and collect coverage
-      run: pytest --cov .
     - name: Upload code coverage
       uses: codecov/codecov-action@v3
 
