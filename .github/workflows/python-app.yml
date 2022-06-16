@@ -41,4 +41,6 @@ jobs:
     - name: Test with tox
       run:
         tox
+    - name: Upload code coverage
+      uses: codecov/codecov-action@v1
 
