@@ -27,7 +27,6 @@ def test_particles():
     assert particles_container.N == 1
     assert list(particles_container.positions) == [1, 2, 3]
     assert list(particles_container.masses) == [1.0]
-    assert particles_container.particles == particles_container
 
     particles_container.add_particle(particle_2)
     assert particles_container.N == 2
@@ -40,8 +39,27 @@ def test_particles():
     with pytest.raises(TypeError):
         particles_container.add_particle("Not a Particle")
 
-    particles_container.remove_particle(particle_1)
-    assert particles_container.N == 1
+
+def test_remove_particle():
+
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 2, 3]),
+        velocity=np.array([1, 2, 3]),
+    )
+
+    particle_2 = Particle(
+        mass=2.0,
+        position=np.array([-1, -2, -3]),
+        velocity=np.array([-1, -2, -3]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    particles.remove_particle(particle_1)
+    assert particles.N == 1
 
     with pytest.raises(TypeError):
-        particles_container.remove_particle(particle_1)
+        particles.remove_particle(particle_1)

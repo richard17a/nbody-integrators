@@ -44,15 +44,11 @@ class Particle(object):
 
             else:
                 raise TypeError(
-                    "The position vector \
-must be a numpy array of length 3."
+                    "The position vector must be a numpy array of length 3."
                 )
 
         else:
-            raise TypeError(
-                "The position vector must \
-be a numpy array of length 3."
-            )
+            raise TypeError("The position vector must be a numpy array of length 3.")
 
     @property
     def velocity(self):
@@ -71,12 +67,8 @@ be a numpy array of length 3."
 
             else:
                 raise TypeError(
-                    "The velocity vector must \
-be a numpy array of length 3."
+                    "The velocity vector must be a numpy array of length 3."
                 )
 
         else:
-            raise TypeError(
-                "The velocity vector must \
-be a numpy array of length 3."
-            )
+            raise TypeError("The velocity vector must be a numpy array of length 3.")
