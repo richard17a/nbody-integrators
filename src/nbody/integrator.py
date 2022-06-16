@@ -33,15 +33,17 @@ class Integrator(object):
     def initialised(self):
         return self.__initialised
 
-    def calculate_energy(self, sol_state):
-        energy = sol_state[:, 0] * 0
+    def calculate_energy(self):
+        if not self.__initialised:
+            raise TypeError("The solution must be integrated before calculating energy.")
+        energy = self.sol_state[:, 0] * 0
 
         masses = self.particles.masses
         G = self.CONST_G
         nbodies = self.particles.N
 
         count = 0
-        for x in sol_state:
+        for x in self.sol_state:
             energy[count] = 0
             for i in range(0, nbodies):
                 energy[count] += (
@@ -65,15 +67,17 @@ class Integrator(object):
 
         return energy
 
-    def plot_trajectory(self, sol_state, title):
+    def plot_trajectory(self, title='N-Body Simulation'):
+        if not self.__initialised:
+            raise TypeError("The solution must be integrated before plotting the trajectory.")
         fig = plt.figure()
         ax = fig.add_subplot(111, aspect="equal")
 
         for ibody in range(0, self.particles.N):
-            traj = ax.plot(sol_state[:, ibody * 3], sol_state[:, 1 + ibody * 3])
+            traj = ax.plot(self.sol_state[:, ibody * 3], self.sol_state[:, 1 + ibody * 3])
             ax.plot(
-                sol_state[0, ibody * 3],
-                sol_state[0, 1 + ibody * 3],
+                self.sol_state[0, ibody * 3],
+                self.sol_state[0, 1 + ibody * 3],
                 "o",
                 color=traj[0].get_color(),
             )

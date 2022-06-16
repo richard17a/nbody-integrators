@@ -15,11 +15,12 @@ particles = Particles()
 particles.add_particle(mass_1)
 particles.add_particle(mass_2)
 
-integrator = Forward_Euler(particles=particles)
-time, state = integrator.integrate(end_time=10.0)
-integrator.plot_trajectory(state, title="2 body")
+integrator = Forward_Euler(particles=particles, dt=0.0001)
+integrator.integrate(end_time=10.0)
+integrator.plot_trajectory(title="2 body")
 
-energy = integrator.calculate_energy(state)
+energy = integrator.calculate_energy()
+time = integrator.sol_time
 
 plt.semilogy(time, np.abs((energy[0] - energy) / energy[0]))
 plt.xlabel("Time")
