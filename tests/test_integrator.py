@@ -49,8 +49,8 @@ def test_plot_trajectory(mock_plt):
     particles.add_particle(particle_2)
 
     integrator = Forward_Euler(particles=particles)
-    t, x = integrator.integrate(10.0)
-    integrator.plot_trajectory(x, title="my title")
+    integrator.integrate(10.0)
+    integrator.plot_trajectory(integrator.sol_state, title="my title")
 
     mock_plt.title.assert_called_once_with("my title")
     assert mock_plt.figure.called

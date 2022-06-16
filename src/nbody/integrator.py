@@ -16,6 +16,8 @@ class Integrator(object):
         self.t_finish = 0.0
         self.__energy = 0.0
         self.__initialised = False
+        self.sol_time = np.zeros(0)
+        self.sol_state = np.zeros(0)
 
     @property
     def particles(self):
@@ -90,7 +92,12 @@ class Integrator(object):
             self.t_end = to_time
 
         npts = int(np.floor((self.t_end - self.t_start) / self.dt) + 1)
-        sol_time = np.linspace(self.t_start, self.t_start + self.dt * (npts - 1), npts)
         x = np.concatenate((self.particles.positions, self.particles.velocities))
 
-        return x, sol_time, npts
+        self.sol_time = np.linspace(
+            self.t_start, self.t_start + self.dt * (npts - 1), npts
+        )
+        self.sol_state = np.zeros((npts, len(x)))
+        self.sol_state[0, :] = x
+
+        return x

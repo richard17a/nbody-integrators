@@ -21,8 +21,8 @@ def test_forward_euler():
     particles.add_particle(particle_2)
 
     integrator = Forward_Euler(particles=particles)
-    t, x = integrator.integrate(10.0)
-    energy = list(integrator.calculate_energy(x))
+    integrator.integrate(10.0)
+    energy = list(integrator.calculate_energy(integrator.sol_state))
     energy_diff = list(np.abs((energy[0] - energy) / energy[0]))
 
     assert energy_diff and max(energy_diff) < 0.1
