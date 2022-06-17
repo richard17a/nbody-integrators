@@ -121,6 +121,10 @@ class Integrator(object):
                 self.__plot_energy(title)
             else:
                 self.__plot_energy()
+        else:
+            raise ValueError(
+                "Incorrect category choice, please choose from: [trajectory, energy]."
+            )
 
     def initialise(self, to_time=None):
         self.__initialised = True

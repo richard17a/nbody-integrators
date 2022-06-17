@@ -31,6 +31,9 @@ def test_integrator():
     assert integrator_not_empty.t_end == 10.0
     assert integrator_not_empty.initialised
 
+    with pytest.raises(ValueError):
+        integrator_not_empty.plot_state(category="incorrect category")
+
 
 @mock.patch("nbody.integrator.plt")
 def test_plot_trajectory_title(mock_plt):
