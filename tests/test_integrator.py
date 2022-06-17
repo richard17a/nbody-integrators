@@ -4,6 +4,7 @@ from nbody.particle import Particle
 from nbody.particles import Particles
 import numpy as np
 from unittest import mock
+import pytest
 
 
 def test_integrator():
@@ -32,7 +33,7 @@ def test_integrator():
 
 
 @mock.patch("nbody.integrator.plt")
-def test_plot_trajectory(mock_plt):
+def test_plot_trajectory_title(mock_plt):
     particle_1 = Particle(
         mass=1.0,
         position=np.array([1, 0, 0]),
@@ -50,7 +51,129 @@ def test_plot_trajectory(mock_plt):
 
     integrator = Forward_Euler(particles=particles)
     integrator.integrate(10.0)
-    integrator.plot_trajectory(title="my title")
+    integrator.plot_state(category="trajectory", title="my title")
 
     mock_plt.title.assert_called_once_with("my title")
     assert mock_plt.figure.called
+
+
+@mock.patch("nbody.integrator.plt")
+def test_plot_trajectory_no_title(mock_plt):
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 0, 0]),
+        velocity=np.array([0, 0.5, 0]),
+    )
+    particle_2 = Particle(
+        mass=1.0,
+        position=np.array([-1, 0, 0]),
+        velocity=np.array([0, -0.5, 0]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    integrator = Forward_Euler(particles=particles)
+    integrator.integrate(10.0)
+    integrator.plot_state(category="trajectory")
+
+    mock_plt.title.assert_called_once_with("N-Body Simulation")
+    assert mock_plt.figure.called
+
+
+@mock.patch("nbody.integrator.plt")
+def test_plot_energy_no_title(mock_plt):
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 0, 0]),
+        velocity=np.array([0, 0.5, 0]),
+    )
+    particle_2 = Particle(
+        mass=1.0,
+        position=np.array([-1, 0, 0]),
+        velocity=np.array([0, -0.5, 0]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    integrator = Forward_Euler(particles=particles)
+    integrator.integrate(10.0)
+    integrator.plot_state(category="energy")
+
+    mock_plt.title.assert_called_once_with("Relative Energy Error")
+    assert mock_plt.figure.called
+
+
+@mock.patch("nbody.integrator.plt")
+def test_plot_energy_title(mock_plt):
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 0, 0]),
+        velocity=np.array([0, 0.5, 0]),
+    )
+    particle_2 = Particle(
+        mass=1.0,
+        position=np.array([-1, 0, 0]),
+        velocity=np.array([0, -0.5, 0]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    integrator = Forward_Euler(particles=particles)
+    integrator.integrate(10.0)
+    integrator.plot_state(category="energy", title="my title")
+
+    mock_plt.title.assert_called_once_with("my title")
+    assert mock_plt.figure.called
+
+
+def test_plot_state_without_initialisation():
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 0, 0]),
+        velocity=np.array([0, 0.5, 0]),
+    )
+    particle_2 = Particle(
+        mass=1.0,
+        position=np.array([-1, 0, 0]),
+        velocity=np.array([0, -0.5, 0]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    integrator = Forward_Euler(particles=particles)
+
+    with pytest.raises(TypeError):
+        integrator.plot_state(category="energy", title="my title")
+
+    with pytest.raises(TypeError):
+        integrator.plot_state(category="trajectory", title="my title")
+
+
+def test_calculate_energy_without_initialisation():
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 0, 0]),
+        velocity=np.array([0, 0.5, 0]),
+    )
+    particle_2 = Particle(
+        mass=1.0,
+        position=np.array([-1, 0, 0]),
+        velocity=np.array([0, -0.5, 0]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    integrator = Forward_Euler(particles=particles)
+
+    with pytest.raises(TypeError):
+        integrator.calculate_energy()

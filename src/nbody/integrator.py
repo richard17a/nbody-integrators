@@ -35,7 +35,9 @@ class Integrator(object):
 
     def calculate_energy(self):
         if not self.__initialised:
-            raise TypeError("The solution must be integrated before calculating energy.")
+            raise TypeError(
+                "The solution must be integrated before calculating energy."
+            )
         energy = self.sol_state[:, 0] * 0
 
         masses = self.particles.masses
@@ -67,14 +69,18 @@ class Integrator(object):
 
         return energy
 
-    def plot_trajectory(self, title='N-Body Simulation'):
+    def __plot_trajectory(self, title="N-Body Simulation"):
         if not self.__initialised:
-            raise TypeError("The solution must be integrated before plotting the trajectory.")
+            raise TypeError(
+                "The solution must be integrated before plotting the trajectory."
+            )
         fig = plt.figure()
         ax = fig.add_subplot(111, aspect="equal")
 
         for ibody in range(0, self.particles.N):
-            traj = ax.plot(self.sol_state[:, ibody * 3], self.sol_state[:, 1 + ibody * 3])
+            traj = ax.plot(
+                self.sol_state[:, ibody * 3], self.sol_state[:, 1 + ibody * 3]
+            )
             ax.plot(
                 self.sol_state[0, ibody * 3],
                 self.sol_state[0, 1 + ibody * 3],
@@ -84,10 +90,37 @@ class Integrator(object):
 
         ax.set_xlabel("x")
         ax.set_ylabel("y")
-        ax.set_xlim(-5, 5)
-        ax.set_ylim(-5, 5)
         plt.title(title)
         plt.show()
+
+    def __plot_energy(self, title="Relative Energy Error"):
+        if not self.__initialised:
+            raise TypeError(
+                "The solution must be integrated before plotting the relative energy error."
+            )
+        fig = plt.figure()
+        ax = fig.add_subplot(111, aspect="equal")
+
+        energy = self.calculate_energy()
+        time = self.sol_time
+
+        ax.semilogy(time, np.abs((energy[0] - energy) / energy[0]))
+        ax.set_xlabel("Time")
+        ax.set_ylabel(r"Relative energy error $\Delta E/E_0$")
+        plt.title(title)
+        plt.show()
+
+    def plot_state(self, category="trajectory", title=None):
+        if category == "trajectory":
+            if title:
+                self.__plot_trajectory(title)
+            else:
+                self.__plot_trajectory()
+        elif category == "energy":
+            if title:
+                self.__plot_energy(title)
+            else:
+                self.__plot_energy()
 
     def initialise(self, to_time=None):
         self.__initialised = True
