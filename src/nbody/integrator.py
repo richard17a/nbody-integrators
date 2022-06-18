@@ -98,13 +98,15 @@ class Integrator(object):
             raise TypeError(
                 "The solution must be integrated before plotting the relative energy error."
             )
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
 
         energy = self.calculate_energy()
         time = self.sol_time
 
-        plt.semilogy(time, np.abs((energy[0] - energy) / energy[0]))
-        plt.xlabel("Time")
-        plt.ylabel(r"Relative energy error $\Delta E/E_0$")
+        ax.semilogy(time, np.abs((energy[0] - energy) / energy[0]))
+        ax.set_xlabel("Time")
+        ax.set_ylabel(r"Relative energy error $\Delta E/E_0$")
         plt.title(title)
         plt.show()
 
