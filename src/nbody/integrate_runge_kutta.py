@@ -6,8 +6,8 @@ from nbody.ode_n_body_first_order import ode_n_body_first_order
 
 
 class Runge_Kutta(Integrator):
-    def __init__(self, particles=None, dt=0.01):
-        super(Runge_Kutta, self).__init__(particles=particles, dt=dt)
+    def __init__(self, particles=None, CONST_G=1.0, dt=0.01):
+        super(Runge_Kutta, self).__init__(particles=particles, CONST_G=CONST_G, dt=dt)
         self.__initialised = False
 
     def integrate(self, end_time):

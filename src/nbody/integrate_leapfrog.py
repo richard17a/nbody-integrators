@@ -6,8 +6,8 @@ from nbody.ode_n_body_first_order import ode_n_body_first_order
 
 
 class Leapfrog(Integrator):
-    def __init__(self, particles=None, dt=0.01):
-        super(Leapfrog, self).__init__(particles=particles, dt=dt)
+    def __init__(self, particles=None, CONST_G=1.0, dt=0.01):
+        super(Leapfrog, self).__init__(particles=particles, CONST_G=CONST_G, dt=dt)
         self.__initialised = False
 
     def integrate(self, end_time):
