@@ -32,6 +32,7 @@ def test_particles():
     assert particles_container.N == 2
     assert list(particles_container.positions) == [1, 2, 3, -1, -2, -3]
     assert list(particles_container.masses) == [1.0, 2.0]
+    assert list(particles_container.radii) == [0.0, 0.0]
 
     particles_container.add_particle(particle_1)
     assert particles_container.N == 2

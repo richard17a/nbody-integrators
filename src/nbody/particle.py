@@ -6,8 +6,9 @@ import numpy as np
 
 
 class Particle(object):
-    def __init__(self, mass, position, velocity):
+    def __init__(self, mass, position, velocity, radius=0.0):
         self.mass = mass
+        self.radius = radius
         self.__position = position
         self.__velocity = velocity
 

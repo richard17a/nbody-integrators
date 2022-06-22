@@ -64,6 +64,10 @@ class Particles(object):
     def masses(self):
         return self.__masses
 
+    @property
+    def radii(self):
+        return [particle.radius for particle in self.__particles]
+
     def add_particle(self, particle: Particle):
 
         if isinstance(particle, Particle):
