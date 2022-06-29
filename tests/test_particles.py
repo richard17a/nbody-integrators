@@ -112,3 +112,56 @@ def test_particles_velocities_setter():
 
     with pytest.raises(ValueError):
         particles.velocities = np.array([1, 2, 3])
+
+
+def test_merge_particles():
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 2, 3]),
+        velocity=np.array([1, 2, 3]),
+    )
+
+    particle_2 = Particle(
+        mass=2.0,
+        position=np.array([-1, -2, -3]),
+        velocity=np.array([-1, -2, -3]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    particles.merge_particles(particle_1, particle_2)
+
+    assert particles.masses == [3.0]
+    assert list(particles.particles[0].velocity) != [-1, -2, -3]
+    assert list(particles.particles[0].position) == [-1, -2, -3]
+
+
+def test_merge_particles_valueerror():
+    particle_1 = Particle(
+        mass=1.0,
+        position=np.array([1, 2, 3]),
+        velocity=np.array([1, 2, 3]),
+    )
+
+    particle_2 = Particle(
+        mass=2.0,
+        position=np.array([-1, -2, -3]),
+        velocity=np.array([-1, -2, -3]),
+    )
+
+    particle_3 = Particle(
+        mass=3.0,
+        position=np.array([-1, -2, -3]),
+        velocity=np.array([-1, -2, -3]),
+    )
+
+    particles = Particles()
+    particles.add_particle(particle_1)
+    particles.add_particle(particle_2)
+
+    particles.merge_particles(particle_2, particle_1)
+
+    with pytest.raises(ValueError):
+        particles.merge_particles(particle_1, particle_3)

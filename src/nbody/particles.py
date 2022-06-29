@@ -4,6 +4,10 @@ Add module docstring...
 
 from nbody.particle import Particle
 import numpy as np
+import logging
+
+logging.basicConfig()
+logging.getLogger().setLevel(logging.INFO)
 
 
 class Particles(object):
@@ -16,6 +20,7 @@ class Particles(object):
         self.__positions = np.array([])
         self.__velocities = np.array([])
         self.__masses = np.array([])
+        self.__radii = np.array([])
         self.__N = 0
 
     @property
@@ -24,7 +29,7 @@ class Particles(object):
 
     @property
     def particles(self):
-        return self
+        return self.__particles
 
     @property
     def positions(self):
@@ -66,7 +71,7 @@ class Particles(object):
 
     @property
     def radii(self):
-        return [particle.radius for particle in self.__particles]
+        return self.__radii
 
     def add_particle(self, particle: Particle):
 
@@ -75,6 +80,7 @@ class Particles(object):
                 self.__positions = np.append(self.__positions, particle.position)
                 self.__velocities = np.append(self.__velocities, particle.velocity)
                 self.__masses = np.append(self.__masses, np.array([particle.mass]))
+                self.__radii = np.append(self.__radii, np.array([particle.radius]))
 
                 self.__particles.append(particle)
                 self.__N += 1
@@ -99,3 +105,30 @@ class Particles(object):
         else:
 
             raise TypeError("Unable to remove particle.")
+
+    def merge_particles(self, particle_1: Particle, particle_2: Particle):
+        try:
+            id_1 = self.__particles.index(particle_1)
+            id_2 = self.__particles.index(particle_2)
+        except ValueError:
+            raise ValueError("Ensure both particles are defined in the Particles() object.")
+
+        if id_1 is not None and id_2 is not None:
+
+            if self.__particles[id_1].mass >= self.__particles[id_2].mass:
+                primary = self.__particles[id_1]
+                secondary = self.__particles[id_2]
+            else:
+                primary = self.__particles[id_2]
+                secondary = self.__particles[id_1]
+
+            primary.velocity = (primary.mass * primary.velocity + secondary.mass * secondary.velocity) / (primary.mass + secondary.mass)
+            primary.mass = primary.mass + secondary.mass
+            primary.radius = np.power(np.power(primary.radius, 3.0) + np.power(secondary.radius, 3.0), 1.0 / 3)
+
+            self.__velocities[3*self.__particles.index(primary):3*self.__particles.index(primary)+3] = primary.velocity
+            self.__masses[self.__particles.index(primary)] = primary.mass
+            self.__radii[self.__particles.index(primary)] = primary.radius
+
+            self.remove_particle(secondary)
+            logging.info(f"Merging particles {id_1} and {id_2} into {id_1}.")
